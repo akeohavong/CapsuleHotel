@@ -65,7 +65,6 @@ Enter the number of capsules available: ");
 
         static string[] CheckIn(string[] guestList)
         {
-            //TODO fix issue invalid room number
             Console.Clear();
             Console.Write(@"Guest Check In
 ==============
