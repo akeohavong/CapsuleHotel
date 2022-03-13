@@ -18,7 +18,7 @@ namespace CapsuleHotel
                          capsules = CheckIn(capsules);
                         break;
                     case "2":
-                        //CheckOut();
+                        capsules = CheckOut(capsules);
                         break;
                     case "3":
                         ViewGuests(capsules);
@@ -28,7 +28,8 @@ namespace CapsuleHotel
                         displayMenu = false;
                         break;
                     default:
-                        Console.WriteLine("Invalid input");
+                        Console.WriteLine("Invalid input. Choose an option [1-4]");
+                        Console.WriteLine();
                         break;
 
                 }
@@ -44,7 +45,7 @@ namespace CapsuleHotel
 2. Check Out
 3. View Guests
 4. Exit
- Choose on option [1-4]: ");
+ Choose an option [1-4]: ");
 
             return Console.ReadLine();
 
@@ -73,13 +74,12 @@ Guest Name: ");
             bool checking = true;
             while (checking)
             {
-
-                Console.Write($"Capsule #[1 - {guestList.Length}: ");
+                Console.Write($"Capsule #[1 - {guestList.Length}]: ");
                 int capsuleNum = int.Parse(Console.ReadLine());
 
-                if (guestList[capsuleNum] == null)
+                if (guestList[capsuleNum - 1] == null)
                 {
-                    guestList[capsuleNum] = newGuest;
+                    guestList[capsuleNum - 1] = newGuest;
                     Console.WriteLine("Success :)");
                     Console.WriteLine($"{newGuest} is booked in Capsule #{capsuleNum}.");
                     checking = false;
@@ -88,22 +88,48 @@ Guest Name: ");
                 {
                     Console.WriteLine("Error :(");
                     Console.WriteLine($"Capsule #{capsuleNum} is occupied");
-
-                    
-
                 }
             }
 
             return guestList;
         }
 
-        static void CheckOut()
+        static string[] CheckOut(string[] guestList)
         {
-            return;
+            //TODO check if array is empty, if empty exit else
+            //continue to check out.
+
+            Console.WriteLine(@"Guest Check Out
+===============");
+            Console.Write($"Capsule #[1-{guestList.Length}]:");
+            
+            bool checking = true;
+            while (checking)
+            {
+                int capsuleNum = int.Parse(Console.ReadLine());
+                if(guestList[capsuleNum - 1 ] == null)
+                {
+                    Console.WriteLine("Error :(");
+                    Console.WriteLine($"Capsule #{capsuleNum} is unoccupied");
+                    Console.Write($"Capsule #[1 - {guestList.Length}]: ");
+                }
+                else
+                {
+                    Console.WriteLine("Success :)");
+                    Console.WriteLine($"{guestList[capsuleNum - 1]} checked out from capsule #{capsuleNum}.");
+                    guestList[capsuleNum - 1] = null;
+                    checking = false;
+                }
+
+            }
+
+            return guestList;
         }
 
         static void ViewGuests(string[] guestList)
         {
+            //TODO implement feature to show 5 smaller and 5 larger than given number
+            //EX: capsule 26 show 21 -31.
             for (int i = 0; i < guestList.Length; i++)
             {
                 if(guestList[i] != null)
