@@ -11,11 +11,11 @@ namespace CapsuleHotel
 
             while (displayMenu)
             {
-                
+
                 switch (MainMenu())
                 {
                     case "1":
-                         capsules = CheckIn(capsules);
+                        capsules = CheckIn(capsules);
                         break;
                     case "2":
                         capsules = CheckOut(capsules);
@@ -128,33 +128,42 @@ Guest Name: ");
                 Console.WriteLine("All capsules are unoccupied.");
                 return guestList;
             }
-            
-            
+
+
         }
 
         static void ViewGuests(string[] guestList)
         {
-            //TODO implement feature to show 5 smaller and 5 larger than given number
-            //EX: capsule 26 show 21 -31.
-            for (int i = 0; i < guestList.Length; i++)
-            {
-                if(guestList[i] != null)
-                {
-                    Console.WriteLine($"{i + 1}: {guestList[i]}");
-                }
-                else
-                {
-                    Console.WriteLine($"{i + 1}: [unoccupied]");
-                }
 
+            Console.WriteLine(@"View Guests
+===========");
+            Console.Write($"Capsule #[1 - {guestList.Length}]: ");
+
+            int capNumber = int.Parse(Console.ReadLine());
+            int lower = capNumber - 5, higher = capNumber + 5;
+            Console.WriteLine($"Capsule #{capNumber} : {guestList[capNumber - 1]}");
+            while (lower < 0)
+            {
+                lower++;
+                higher++;
             }
+            while (higher > guestList.Length)
+            {
+                lower--;
+                higher--;
+            }
+            for (int i = lower; i < higher; i++)
+            {
+                Console.WriteLine(i + 1 + " : " + guestList[i]);
+            }
+
         }
 
         static bool CheckIfEmpty(string[] guestList)
         {
-            for(int i = 0; i < guestList.Length; i++)
+            for (int i = 0; i < guestList.Length; i++)
             {
-                if(guestList[i] != null)
+                if (guestList[i] != null)
                 {
                     return true;
                 }
@@ -173,11 +182,12 @@ All data will be lost.
 Exit [y/n]: ");
 
             string option = Console.ReadLine().ToLower();
-            if(option == "y")
+            if (option == "y")
             {
                 Console.WriteLine();
                 Console.WriteLine("Goodbye!");
-            } else
+            }
+            else
             {
                 MainMenu();
             }
