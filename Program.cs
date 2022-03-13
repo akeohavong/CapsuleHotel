@@ -96,34 +96,40 @@ Guest Name: ");
 
         static string[] CheckOut(string[] guestList)
         {
-            //TODO check if array is empty, if empty exit else
-            //continue to check out.
-
-            Console.WriteLine(@"Guest Check Out
-===============");
-            Console.Write($"Capsule #[1-{guestList.Length}]:");
-            
-            bool checking = true;
-            while (checking)
+            if (CheckIfEmpty(guestList))
             {
-                int capsuleNum = int.Parse(Console.ReadLine());
-                if(guestList[capsuleNum - 1 ] == null)
-                {
-                    Console.WriteLine("Error :(");
-                    Console.WriteLine($"Capsule #{capsuleNum} is unoccupied");
-                    Console.Write($"Capsule #[1 - {guestList.Length}]: ");
-                }
-                else
-                {
-                    Console.WriteLine("Success :)");
-                    Console.WriteLine($"{guestList[capsuleNum - 1]} checked out from capsule #{capsuleNum}.");
-                    guestList[capsuleNum - 1] = null;
-                    checking = false;
-                }
+                Console.WriteLine(@"Guest Check Out
+===============");
+                Console.Write($"Capsule #[1-{guestList.Length}]:");
 
+                bool checking = true;
+                while (checking)
+                {
+                    int capsuleNum = int.Parse(Console.ReadLine());
+                    if (guestList[capsuleNum - 1] == null)
+                    {
+                        Console.WriteLine("Error :(");
+                        Console.WriteLine($"Capsule #{capsuleNum} is unoccupied");
+                        Console.Write($"Capsule #[1 - {guestList.Length}]: ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Success :)");
+                        Console.WriteLine($"{guestList[capsuleNum - 1]} checked out from capsule #{capsuleNum}.");
+                        guestList[capsuleNum - 1] = null;
+                        checking = false;
+                    }
+
+                }
+                return guestList;
             }
-
-            return guestList;
+            else
+            {
+                Console.WriteLine("All capsules are unoccupied.");
+                return guestList;
+            }
+            
+            
         }
 
         static void ViewGuests(string[] guestList)
@@ -142,6 +148,18 @@ Guest Name: ");
                 }
 
             }
+        }
+
+        static bool CheckIfEmpty(string[] guestList)
+        {
+            for(int i = 0; i < guestList.Length; i++)
+            {
+                if(guestList[i] != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
