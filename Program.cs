@@ -65,6 +65,7 @@ Enter the number of capsules available: ");
 
         static string[] CheckIn(string[] guestList)
         {
+            Console.Clear();
             Console.Write(@"Guest Check In
 ==============
 Guest Name: ");
@@ -95,6 +96,7 @@ Guest Name: ");
 
         static string[] CheckOut(string[] guestList)
         {
+            Console.Clear();
             if (CheckIfEmpty(guestList))
             {
                 Console.WriteLine(@"Guest Check Out
@@ -139,7 +141,7 @@ Guest Name: ");
             Console.Write($"Capsule #[1 - {guestList.Length}]: ");
 
             int capNumber = int.Parse(Console.ReadLine());
-            int lower = capNumber - 5, higher = capNumber + 5;
+            int lower = capNumber - 6, higher = capNumber + 5;
             Console.WriteLine($"Capsule #{capNumber} : {guestList[capNumber - 1]}");
             while (lower < 0)
             {
@@ -153,7 +155,13 @@ Guest Name: ");
             }
             for (int i = lower; i < higher; i++)
             {
-                Console.WriteLine(i + 1 + " : " + guestList[i]);
+                if (guestList[i] != null)
+                {
+                    Console.WriteLine(i + 1 + " : " + guestList[i]);
+                } else
+                {
+                    Console.WriteLine(i + 1 + " : [unoccupied]");
+                }
             }
 
         }
@@ -186,14 +194,11 @@ Exit [y/n]: ");
                 Console.WriteLine();
                 Console.WriteLine("Goodbye!");
                 return false;
-            } else
+            }
+            else
             {
                 return true;
             }
         }
-
-
-            
-
     }
 }
