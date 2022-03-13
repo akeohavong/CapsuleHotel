@@ -24,8 +24,7 @@ namespace CapsuleHotel
                         ViewGuests(capsules);
                         break;
                     case "4":
-                        ExitMenu();
-                        displayMenu = false;
+                        displayMenu = ExitMenu();
                         break;
                     default:
                         Console.WriteLine("Invalid input. Choose an option [1-4]");
@@ -172,7 +171,7 @@ Guest Name: ");
         }
 
 
-        static void ExitMenu()
+        static bool ExitMenu()
         {
             Console.Clear();
             Console.Write(@"Exit
@@ -186,13 +185,15 @@ Exit [y/n]: ");
             {
                 Console.WriteLine();
                 Console.WriteLine("Goodbye!");
-            }
-            else
+                return false;
+            } else
             {
-                MainMenu();
+                return true;
             }
-
         }
+
+
+            
 
     }
 }
