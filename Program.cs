@@ -65,6 +65,7 @@ Enter the number of capsules available: ");
 
         static string[] CheckIn(string[] guestList)
         {
+            //TODO fix issue invalid room number
             Console.Clear();
             Console.Write(@"Guest Check In
 ==============
@@ -74,10 +75,15 @@ Guest Name: ");
             bool checking = true;
             while (checking)
             {
+
                 Console.Write($"Capsule #[1 - {guestList.Length}]: ");
                 int capsuleNum = int.Parse(Console.ReadLine());
 
-                if (guestList[capsuleNum - 1] == null)
+                if (capsuleNum <= 0 || capsuleNum > guestList.Length)
+                {
+                    Console.WriteLine("Invalid capsule number.");
+                }
+                else if (guestList[capsuleNum - 1] == null)
                 {
                     guestList[capsuleNum - 1] = newGuest;
                     Console.WriteLine("Success :)");
@@ -87,31 +93,39 @@ Guest Name: ");
                 else
                 {
                     Console.WriteLine("Error :(");
-                    Console.WriteLine($"Capsule #{capsuleNum} is occupied");
+                    Console.WriteLine($"Capsule #{capsuleNum} is occupied.");
                 }
             }
-
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
             return guestList;
         }
 
         static string[] CheckOut(string[] guestList)
         {
             Console.Clear();
+            //if all capsules are empty, then exit check out menu
             if (CheckIfEmpty(guestList))
             {
                 Console.WriteLine(@"Guest Check Out
 ===============");
-                Console.Write($"Capsule #[1-{guestList.Length}]:");
+                
 
                 bool checking = true;
                 while (checking)
                 {
+                    Console.Write($"Capsule #[1-{guestList.Length}]: ");
                     int capsuleNum = int.Parse(Console.ReadLine());
-                    if (guestList[capsuleNum - 1] == null)
+
+                    if(capsuleNum <= 0 || capsuleNum > guestList.Length)
+                    {
+                        Console.WriteLine("Invalid capsule number.");
+                    }
+                    else if (guestList[capsuleNum - 1] == null)
                     {
                         Console.WriteLine("Error :(");
                         Console.WriteLine($"Capsule #{capsuleNum} is unoccupied");
-                        Console.Write($"Capsule #[1 - {guestList.Length}]: ");
                     }
                     else
                     {
@@ -122,11 +136,17 @@ Guest Name: ");
                     }
 
                 }
+                Console.Write("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
                 return guestList;
             }
             else
             {
                 Console.WriteLine("All capsules are unoccupied.");
+                Console.Write("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
                 return guestList;
             }
 
@@ -135,34 +155,56 @@ Guest Name: ");
 
         static void ViewGuests(string[] guestList)
         {
-
+            Console.Clear();
             Console.WriteLine(@"View Guests
 ===========");
-            Console.Write($"Capsule #[1 - {guestList.Length}]: ");
 
-            int capNumber = int.Parse(Console.ReadLine());
-            int lower = capNumber - 6, higher = capNumber + 5;
-            Console.WriteLine($"Capsule #{capNumber} : {guestList[capNumber - 1]}");
-            while (lower < 0)
+            bool checking = true;
+            while (checking)
             {
-                lower++;
-                higher++;
-            }
-            while (higher > guestList.Length)
-            {
-                lower--;
-                higher--;
-            }
-            for (int i = lower; i < higher; i++)
-            {
-                if (guestList[i] != null)
+                Console.Write($"Capsule #[1 - {guestList.Length}]: ");
+                int capNumber = int.Parse(Console.ReadLine());
+                if (capNumber <= 0 || capNumber > guestList.Length)
                 {
-                    Console.WriteLine(i + 1 + " : " + guestList[i]);
-                } else
+                    Console.WriteLine("Invalid capsule number.");
+                }
+                else
                 {
-                    Console.WriteLine(i + 1 + " : [unoccupied]");
+                    int lower = capNumber - 5, higher = capNumber + 5;
+                    //following while loops adjust range to account for edge cases
+                    //will add amount lower than 0 to the upper bound
+                    //will subtract higher than array length to lower bound
+                    while (lower < 0)
+                    {
+                        lower++;
+                        higher++;
+                    }
+                    while (higher > guestList.Length)
+                    {
+                        lower--;
+                        higher--;
+                    }
+                    //iterate through 5 smaller and 5 larger indices given new range
+                    for (int i = lower; i < higher; i++)
+                    {
+
+
+                        if (guestList[i] != null)
+                        {
+                            Console.WriteLine(i + 1 + " : " + guestList[i]);
+                        }
+                        else
+                        {
+                            Console.WriteLine(i + 1 + " : [unoccupied]");
+                        }
+                    }
+                    checking = false;
                 }
             }
+
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
 
         }
 
@@ -197,6 +239,7 @@ Exit [y/n]: ");
             }
             else
             {
+                Console.Clear();
                 return true;
             }
         }
