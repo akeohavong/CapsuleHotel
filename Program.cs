@@ -163,10 +163,29 @@ Guest Name: ");
             {
                 Console.Write($"Capsule #[1 - {guestList.Length}]: ");
                 int capNumber = int.Parse(Console.ReadLine());
+
+        
                 if (capNumber <= 0 || capNumber > guestList.Length)
                 {
                     Console.WriteLine("Invalid capsule number.");
                 }
+                else if(guestList.Length < 10)
+                {
+                    for(int i = 0; i < guestList.Length; i++)
+                    {
+
+                        if (guestList[i] != null)
+                        {
+                            Console.WriteLine(i + 1 + " : " + guestList[i]);
+                        }
+                        else
+                        {
+                            Console.WriteLine(i + 1 + " : [unoccupied]");
+                        }
+                    }
+                    checking = false;
+                }
+
                 else
                 {
                     int lower = capNumber - 5, higher = capNumber + 5;
